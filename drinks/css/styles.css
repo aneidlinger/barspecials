@@ -1,0 +1,12 @@
+.line::after {
+    content: '';
+    height: 1px;
+    margin: 20px auto;
+    background: white;
+    display: block;
+    width: 98%;
+}
+
+.line:first-child {
+    margin-top: 20px;
+}

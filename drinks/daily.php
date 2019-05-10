@@ -1,6 +1,6 @@
 <?php
 require 'includes/config.php';
-require 'models/all_bars_model.php';
+require 'models/daily_model.php';
 
 ?>
 
@@ -66,49 +66,44 @@ require 'models/all_bars_model.php';
     </nav>
 
     <div class="container">
-        <div class="row">
-            <?php
+
+        <?php
+// ini_set('display_errors', 1);
 // var_dump($result);
 // var_dump($barList);
+$iter = 0;
+$closeDiv = false;
+$current_bar = '';
 if ($result):
     if (mysqli_num_rows($result) > 0):
-        while ($bar = mysqli_fetch_assoc($result)):
+        while ($daily = mysqli_fetch_assoc($result)):
             // print_r($bar);
-
             // var_dump($bar);
             ?>
-            <div class="col-md-4 col-sm-6 my-5">
-                <div class="d-flex flex-column justify-content-between">
 
-                    <!-- Row 1 -->
-                    <div class="row">
-                        <div class="aspect border border-warning rounded-lg">
-                            <div class="img-centering">
-                                <div class="flexbox-centering">
-                                    <img class="logo" src="img/<?php echo $bar['logo']; ?>" alt="Logo">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <?php if ($daily['bar'] != $current_bar) {?>
+        <div class="row">
+            <div class="col my-5">
 
-                    <!-- Row 2 -->
-                    <div class="row align-self-center">
-                        <div class="col">
-                            <a href="bar.php?bar_id=<?php echo $bar['bar_id']; ?>">
-                                <h4 class="text-info text-center"><?php echo $bar['bar_name']; ?></h4>
-                                <h4 class="text-secondary text-center"><?php echo $bar['neighborhood_name']; ?></h4>
-                            </a>
-                        </div>
-                    </div>
+                <h4 class="text-info"><?php echo $daily['bar']; ?></h4><?php }?>
+                <h5 class="text-secondary"><?php echo $daily['special_desc']; ?></h5>
+                <?php if ($daily['bar'] != $current_bar && $closeDiv == true) {?>
 
-                </div>
             </div>
-            <?php
+        </div>
+        <?php $closeDiv = false;
+                $current_bar = $daily['bar'];
+                continue;?>
+        <?php } else {
+
+                ($daily['bar'] != $current_bar && $iter < 0 ? $closeDiv = true : $closeDiv = false);
+                $iter++;
+                $current_bar = $daily['bar'];}
         endwhile;
     endif;
 endif;
 ?>
-        </div>
+    </div>
 
 
 

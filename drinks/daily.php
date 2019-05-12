@@ -34,25 +34,32 @@ require 'models/daily_model.php';
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Monday">Monday</a>
+                        <a class="nav-link <?php echo ($day == 'Monday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Monday">Monday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Tuesday">Tuesday</a>
+                        <a class="nav-link <?php echo ($day == 'Tuesday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Tuesday">Tuesday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Wednesday">Wednesday</a>
+                        <a class="nav-link <?php echo ($day == 'Wednesday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Wednesday">Wednesday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Thursday">Thursday</a>
+                        <a class="nav-link <?php echo ($day == 'Thursday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Thursday">Thursday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Friday">Friday</a>
+                        <a class="nav-link <?php echo ($day == 'Friday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Friday">Friday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Saturday">Saturday</a>
+                        <a class="nav-link <?php echo ($day == 'Saturday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Saturday">Saturday</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="daily.php?day=Sunday">Sunday</a>
+                        <a class="nav-link <?php echo ($day == 'Sunday') ? 'active' : ''; ?>"
+                            href="daily.php?day=Sunday">Sunday</a>
                     </li>
                 </ul>
                 <!-- Search Bar -->
@@ -71,7 +78,7 @@ require 'models/daily_model.php';
 // ini_set('display_errors', 1);
 // var_dump($result);
 // var_dump($barList);
-$iter = 0;
+
 $closeDiv = false;
 $current_bar = '';
 if ($result):
@@ -79,42 +86,64 @@ if ($result):
         while ($daily = mysqli_fetch_assoc($result)):
             // print_r($bar);
             // var_dump($bar);
-            ?>
 
-        <?php if ($daily['bar'] != $current_bar) {?>
-        <div class="row">
-            <div class="col my-5">
+            if ($daily['bar'] != $current_bar && $closeDiv == false) {
+                $closeDiv = true;
+                ?>
+        <div class="row my-5">
+            <div class="col-3">
+                <div class="aspect border border-warning rounded-lg">
+                    <div class="img-centering">
+                        <div class="flexbox-centering">
+                            <img class="logo" src="img/<?php echo $daily['logo']; ?>" alt="Logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h4 class="text-info d-inline"><?php echo $daily['bar']; ?></h4></br>
+                <h5 class="text-secondary d-inline"><?php echo $daily['special_desc']; ?></h5></br>
+                <?php $current_bar = $daily['bar'];
+            } elseif ($daily['bar'] != $current_bar) {?>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-3">
+                <div class="aspect border border-warning rounded-lg">
+                    <div class="img-centering">
+                        <div class="flexbox-centering">
+                            <img class="logo" src="img/<?php echo $daily['logo']; ?>" alt="Logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h4 class="text-info d-inline"><?php echo $daily['bar']; ?></h4></br>
+                <h5 class="text-secondary d-inline"><?php echo $daily['special_desc']; ?></h5></br>
+                <?php
+        $current_bar = $daily['bar'];
+        } else {?>
 
-                <h4 class="text-info"><?php echo $daily['bar']; ?></h4><?php }?>
-                <h5 class="text-secondary"><?php echo $daily['special_desc']; ?></h5>
-                <?php if ($daily['bar'] != $current_bar && $closeDiv == true) {?>
+                <h5 class="text-secondary d-inline"><?php echo $daily['special_desc']; ?></h5></br>
+
+                <?php
+        $current_bar = $daily['bar'];
+        }
+
+    endwhile;
+endif;
+endif;
+?>
 
             </div>
         </div>
-        <?php $closeDiv = false;
-                $current_bar = $daily['bar'];
-                continue;?>
-        <?php } else {
-
-                ($daily['bar'] != $current_bar && $iter < 0 ? $closeDiv = true : $closeDiv = false);
-                $iter++;
-                $current_bar = $daily['bar'];}
-        endwhile;
-    endif;
-endif;
-?>
-    </div>
-
-
-
-    </div>
 
 
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 
 

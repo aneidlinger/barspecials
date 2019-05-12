@@ -2,7 +2,7 @@
 
 $day = $_GET['day'];
 
-$query = "SELECT s.special_desc, b.bar_name AS 'bar', c.category, d.day_name
+$query = "SELECT s.special_desc, b.bar_name AS 'bar', c.category, d.day_name, b.logo
             FROM specials s, days d, bars b, categories c
             WHERE d.day_name = '$day'
             AND b.bar_id = s.bar_id

@@ -25,7 +25,7 @@ require 'models/all_bars_model.php';
     <!-- Navbar Container -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="index.php">Drink Specials</a>
+            <a class="navbar-brand active" href="index.php">Drink Specials</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -81,7 +81,7 @@ if ($result):
                 <div class="d-flex flex-column justify-content-between">
 
                     <!-- Row 1 -->
-                    <div class="row">
+                    <div class="row w-100 justify-content-center align-self-center">
                         <div class="aspect border border-warning rounded-lg">
                             <div class="img-centering">
                                 <div class="flexbox-centering">
